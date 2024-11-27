@@ -1,0 +1,14 @@
+recursos/imagens/logo.png filter=lfs diff=lfs merge=lfs -text
+recursos/sons/ferias.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/seleciona.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/sorte.wav filter=lfs diff=lfs merge=lfs -text
+recursos/imagens/casas filter=lfs diff=lfs merge=lfs -text
+recursos/imagens/menu filter=lfs diff=lfs merge=lfs -text
+recursos/imagens/painel filter=lfs diff=lfs merge=lfs -text
+recursos/sons/prisao.wav filter=lfs diff=lfs merge=lfs -text
+recursos/imagens/dados filter=lfs diff=lfs merge=lfs -text
+recursos/sons/menu.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/ambiente.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/avanca.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/azar.wav filter=lfs diff=lfs merge=lfs -text
+recursos/sons/dados.wav filter=lfs diff=lfs merge=lfs -text
