@@ -1,15 +1,21 @@
 package visao;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import controle.JogoController;
+
 import modelo.Jogador;
+
+import util.ArquivoUtil;
 
 public class PainelTabuleiro extends JPanel {
     private static final int TAMANHO_CASA = 80; // Tamanho de cada casa em pixels
@@ -20,24 +26,36 @@ public class PainelTabuleiro extends JPanel {
 
 
     private JogoController jogoController;
-    private ArrayList<Jogador> jogadores;
 
-    private BufferedImage fundoTabuleiro; // Fundo do tabuleiro
-    private BufferedImage logoImage; // Logo do jogo
-    private BufferedImage[] imagensCasas; // Imagens das casas
-    private BufferedImage dado1Imagem; // Imagem do primeiro dado
-    private BufferedImage dado2Imagem; // Imagem do segundo dado
-    private JButton botaoRolarDados; // Botão para rolar os dados
+    private BufferedImage fundoTabuleiro;   // Fundo do tabuleiro
+    private BufferedImage logoImage;        // Logo do jogo
+    private BufferedImage[] imagensCasas;   // Imagens das casas
+    private BufferedImage dado1Imagem;      // Imagem do primeiro dado
+    private BufferedImage dado2Imagem;      // Imagem do segundo dado
+    private JButton botaoRolarDados;        // Botão para rolar os dados
+    private JButton botaoSalvarJogo;        // Botão para rolar os dados
 
     public PainelTabuleiro(JogoController jogoController) {
         this.jogoController = jogoController;
-        this.jogadores = jogoController.getTabuleiroController().getJogadores();
 
         carregarImagensTabuleiro();
         inicializarComponentes();
 
         setPreferredSize(new Dimension(960, 1080)); // Tamanho fixo do painel
         setLayout(null); // Layout absoluto para controle manual
+    }
+
+    private void salvarJogo(String caminhoArquivo) {
+        try{
+            ArquivoUtil.salvarEstado(jogoController, caminhoArquivo);
+        }
+        catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "ERRO AO SALVAR O JOGO");
+                return;
+        }
+
+
+        JOptionPane.showMessageDialog(null, "Jogo salvo com sucesso em " + caminhoArquivo);
     }
 
     private void carregarImagensTabuleiro() {
@@ -76,6 +94,15 @@ public class PainelTabuleiro extends JPanel {
         botaoRolarDados.setPreferredSize(new Dimension(150, TAMANHO_DADO));
         botaoRolarDados.addActionListener(e -> rolarDados());
         add(botaoRolarDados);
+
+        botaoSalvarJogo = new JButton("Salvar jogo");
+        botaoSalvarJogo.setPreferredSize(new Dimension(100, TAMANHO_DADO-50));
+        botaoRolarDados.addActionListener(e -> {
+            String arquivo = JOptionPane.showInputDialog(null, "Digite o nome do arquivo");
+            arquivo = "saves/" + arquivo;
+            salvarJogo(arquivo);
+        });
+        add(botaoSalvarJogo);
     }
 
     private void rolarDados() {
@@ -217,6 +244,9 @@ public class PainelTabuleiro extends JPanel {
 
         botaoRolarDados.setBounds(xCentro, yCentro, botaoRolarDados.getPreferredSize().width,
                 botaoRolarDados.getPreferredSize().height);
+
+        botaoSalvarJogo.setBounds(xCentro, yCentro+50, botaoSalvarJogo.getPreferredSize().width,
+                botaoSalvarJogo.getPreferredSize().height);
 
         int xDado1 = xCentro + botaoRolarDados.getPreferredSize().width + ESPACAMENTO_COMPONENTES;
         int xDado2 = xDado1 + TAMANHO_DADO + ESPACAMENTO_COMPONENTES;

@@ -1,53 +1,82 @@
 package visao;
 
+import modelo.Tabuleiro;
+import modelo.Jogador;
+import modelo.Casa;
+
 import controle.SomController;
 import controle.TabuleiroController;
-import modelo.Jogador;
-import modelo.Tabuleiro;
+import controle.JogoController;
+
+import util.ArquivoUtil;
 
 import javax.swing.*;
+
 import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import java.io.IOException;
 
 public class PainelMenu extends JPanel {
     private CardLayout layout;
     private JPanel telas;
-    private PainelJogador painelJogador;
-    private TabuleiroController tabuleiroController;
-    private SomController somController;
+    private JFrame frame;
 
-    public PainelMenu(JFrame frame, Runnable iniciarJogoCallback) {
+    private JogoController jogoController;
+    private SomController bgm;
+    private SomController sfx;
+
+    public PainelMenu(JFrame frame)
+    {
         setLayout(new BorderLayout());
-        layout = new CardLayout();
-        telas = new JPanel(layout);
 
-        tabuleiroController = new TabuleiroController(new Tabuleiro());
-        painelJogador = new PainelJogador(new ArrayList<>(), new ArrayList<>());
-        somController = new SomController(); // Instancia o controlador de som
+        this.frame = frame;
+        this.layout = new CardLayout();
+        this.telas = new JPanel(layout);
+        this.bgm = new SomController();
+        this.sfx = new SomController();
+        this.jogoController = null;
 
-        telas.add(criarPainelComFundo("recursos/imagens/menu/fundo_inicial.png"), "Introducao1");
-        telas.add(criarPainelComFundo("recursos/imagens/menu/fundo_faculdade.png"), "Introducao2");
-        telas.add(criarMenuPrincipal(frame), "MenuPrincipal");
-        telas.add(criarSelecaoNovoCarregarJogo(frame), "SelecionarJogo");
-        telas.add(criarSelecaoQuantidadeJogadores(frame, iniciarJogoCallback), "SelecaoJogadores");
+        telas.add(criarPainelComFundo("recursos/imagens/menu/fundo_inicial.png"),
+                "Introducao1");
+        telas.add(criarPainelComFundo("recursos/imagens/menu/fundo_faculdade.png"),
+                "Introducao2");
+        telas.add(criarMenuPrincipal(),
+                "MenuPrincipal");
+        telas.add(criarSelecaoPartida(frame),
+                "SelecaoPartida");
+        telas.add(criarSelecaoQuantidadeJogadores(frame),
+                "SelecaoJogadores");
 
         add(telas, BorderLayout.CENTER);
-
-        exibirIntroducoes();
     }
 
-    private void exibirIntroducoes() {
-        somController.tocarSom("recursos/sons/menu.wav", true); // Loop no som do menu
-        layout.show(telas, "Introducao1");
-        Timer timer1 = new Timer(3000, e -> {
-            layout.show(telas, "Introducao2");
-            Timer timer2 = new Timer(2000, e2 -> layout.show(telas, "MenuPrincipal"));
-            timer2.setRepeats(false);
-            timer2.start();
-        });
-        timer1.setRepeats(false);
-        timer1.start();
+    private static JPanel criarPainelDireito(PainelJogador painelJogador, PainelDescricaoCasa painelDescricaoCasa) {
+        JPanel painelDireito = new JPanel(new BorderLayout());
+        painelDireito.setPreferredSize(new Dimension(960, 1080));
+        painelDireito.add(painelJogador, BorderLayout.NORTH);
+        painelDireito.add(painelDescricaoCasa, BorderLayout.SOUTH);
+        return painelDireito;
+    }
+
+    private void configurarFramePrincipal(JFrame frame, JPanel painelTabuleiro, JPanel painelDireito) {
+        frame.getContentPane().removeAll();
+        frame.setLayout(new BorderLayout());
+        frame.add(painelTabuleiro, BorderLayout.CENTER);
+        frame.add(painelDireito, BorderLayout.EAST);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private JButton criarBotao(String texto, java.awt.event.ActionListener acao) {
+        JButton botao = new JButton(texto);
+        botao.setFont(new Font("Arial", Font.BOLD, 28));
+        botao.setPreferredSize(new Dimension(400, 100));
+        botao.addActionListener(acao);
+
+        return botao;
     }
 
     private JPanel criarPainelComFundo(String caminhoImagem) {
@@ -61,7 +90,7 @@ public class PainelMenu extends JPanel {
         };
     }
 
-    private JPanel criarMenuPrincipal(JFrame frame) {
+    private JPanel criarMenuPrincipal() {
         JPanel painel = new JPanel(new BorderLayout());
         JLabel fundo = new JLabel(new ImageIcon("recursos/imagens/menu/fundo_menu.png"));
         fundo.setLayout(null);
@@ -73,17 +102,17 @@ public class PainelMenu extends JPanel {
         painelBotoes.setBounds(1250, 400, 400, 390);
 
         JButton botaoJogar = criarBotao("Jogar", e -> {
-            somController.tocarSom("recursos/sons/seleciona.wav", false);
-            layout.show(telas, "SelecionarJogo");
+            sfx.tocarSom("recursos/sons/seleciona.wav", false);
+            layout.show(this.telas, "SelecaoPartida");
         });
 
         JButton botaoCreditos = criarBotao("Créditos", e -> {
-            somController.tocarSom("recursos/sons/seleciona.wav", false);
-            JOptionPane.showMessageDialog(frame, "Créditos: \nUniversidade XYZ\nDesenvolvido por: Seu Nome");
+            sfx.tocarSom("recursos/sons/seleciona.wav", false);
+            JOptionPane.showMessageDialog(this.frame, "Créditos: \nUniversidade XYZ\nDesenvolvido por: Seu Nome");
         });
 
         JButton botaoSair = criarBotao("Sair", e -> {
-            somController.tocarSom("recursos/sons/seleciona.wav", false);
+            sfx.tocarSom("recursos/sons/seleciona.wav", false);
             System.exit(0);
         });
 
@@ -95,7 +124,7 @@ public class PainelMenu extends JPanel {
         return painel;
     }
 
-    private JPanel criarSelecaoNovoCarregarJogo(JFrame frame) {
+    private JPanel criarSelecaoPartida(JFrame frame) {
         JPanel painel = criarPainelComFundo("recursos/imagens/menu/fundo_jogar.png");
         painel.setLayout(new GridBagLayout());
 
@@ -105,13 +134,16 @@ public class PainelMenu extends JPanel {
         gbc.gridy = 0;
 
         JButton botaoNovoJogo = criarBotao("Novo Jogo", e -> {
-            somController.tocarSom("recursos/sons/seleciona.wav", false);
+            sfx.tocarSom("recursos/sons/seleciona.wav", false);
+            Tabuleiro tabuleiro = new Tabuleiro();
+            TabuleiroController tabuleiroController = new TabuleiroController(tabuleiro);
+            this.jogoController = new JogoController(tabuleiroController);
             layout.show(telas, "SelecaoJogadores");
         });
 
         JButton botaoCarregarJogo = criarBotao("Carregar Jogo", e -> {
-            somController.tocarSom("recursos/sons/seleciona.wav", false);
-            JOptionPane.showMessageDialog(frame, "Funcionalidade de carregar jogo não implementada ainda.");
+            sfx.tocarSom("recursos/sons/seleciona.wav", false);
+            carregarJogo();
         });
 
         painel.add(botaoNovoJogo, gbc);
@@ -122,7 +154,7 @@ public class PainelMenu extends JPanel {
         return painel;
     }
 
-    private JPanel criarSelecaoQuantidadeJogadores(JFrame frame, Runnable iniciarJogoCallback) {
+    private JPanel criarSelecaoQuantidadeJogadores(JFrame frame) {
         JPanel painel = criarPainelComFundo("recursos/imagens/menu/fundo_jogar.png");
         painel.setLayout(new GridBagLayout());
 
@@ -140,9 +172,12 @@ public class PainelMenu extends JPanel {
         gbc.gridy++;
         gbc.gridwidth = 1;
 
-        JButton botao2Jogadores = criarBotao("2 Jogadores", e -> configurarJogadores(frame, 2, iniciarJogoCallback));
-        JButton botao3Jogadores = criarBotao("3 Jogadores", e -> configurarJogadores(frame, 3, iniciarJogoCallback));
-        JButton botao4Jogadores = criarBotao("4 Jogadores", e -> configurarJogadores(frame, 4, iniciarJogoCallback));
+        JButton botao2Jogadores = criarBotao("2 Jogadores",
+                e -> configurarJogadores(frame, 2));
+        JButton botao3Jogadores = criarBotao("3 Jogadores",
+                e -> configurarJogadores(frame, 3));
+        JButton botao4Jogadores = criarBotao("4 Jogadores",
+                e -> configurarJogadores(frame, 4));
 
         gbc.gridx = 0;
         painel.add(botao2Jogadores, gbc);
@@ -156,27 +191,77 @@ public class PainelMenu extends JPanel {
         return painel;
     }
 
-    private void configurarJogadores(JFrame frame, int quantidade, Runnable iniciarJogoCallback) {
+    private void configurarJogadores(JFrame frame, int quantidade) {
         ArrayList<Jogador> jogadores = new ArrayList<>();
         Color[] cores = { Color.GREEN, Color.RED, Color.YELLOW, Color.BLUE };
         String[] nomesPadrao = { "Jogador 1", "Jogador 2", "Jogador 3", "Jogador 4" };
-    
+
         for (int i = 0; i < quantidade; i++) {
             String nome = JOptionPane.showInputDialog(frame, "Nome do " + nomesPadrao[i], nomesPadrao[i]);
             if (nome == null || nome.isEmpty()) nome = nomesPadrao[i];
             jogadores.add(new Jogador(nome, cores[i]));
         }
-    
-        tabuleiroController.setJogadores(jogadores);
-        painelJogador = new PainelJogador(jogadores, new ArrayList<>(Arrays.asList(tabuleiroController.getCasas())));
-        iniciarJogoCallback.run();
+
+        jogoController.getTabuleiroController().setJogadores(jogadores);
+        iniciarJogo();
     }
 
-    private JButton criarBotao(String texto, java.awt.event.ActionListener acao) {
-        JButton botao = new JButton(texto);
-        botao.setFont(new Font("Arial", Font.BOLD, 28));
-        botao.setPreferredSize(new Dimension(400, 100));
-        botao.addActionListener(acao);
-        return botao;
+    private void carregarJogo() {
+        try {
+            String nome = JOptionPane.showInputDialog(null, "");
+            nome = "saves/" + nome;
+            this.jogoController = ArquivoUtil.<JogoController>carregarEstado(nome, JogoController.class);
+        }
+        catch (IOException e) {
+
+        }
+        iniciarJogo();
+    }
+
+    private void iniciarJogo() {
+        bgm.pararSom();
+        bgm.tocarSom("recursos/sons/ambiente.wav", true);
+        TabuleiroController tabuleiroController = jogoController.getTabuleiroController();
+
+        PainelTabuleiro painelTabuleiro = new PainelTabuleiro(jogoController);
+        PainelJogador painelJogador = new PainelJogador(tabuleiroController.getJogadores(),
+                new ArrayList<>(Arrays.asList(jogoController.getTabuleiroController().getCasas())));
+        PainelDescricaoCasa painelDescricaoCasa = new PainelDescricaoCasa("recursos/imagens/painel/fundo_casas.png");
+
+        JPanel painelDireito = criarPainelDireito(painelJogador, painelDescricaoCasa);
+
+        painelTabuleiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int index = tabuleiroController.getCasaIndex(e.getX(), e.getY());
+                if (index >= 0) {
+                    Casa casa = tabuleiroController.getCasa(index);
+                    if (casa != null) {
+                        painelDescricaoCasa.atualizarInformacoes(casa, index);
+                    }
+                }
+            }
+        });
+
+        jogoController.setAtualizarInterfaceCallback(() -> {
+            painelJogador.atualizarPainel();
+            int index = jogoController.getJogadorAtual().getCasaAtual();
+            painelDescricaoCasa.atualizarInformacoes(tabuleiroController.getCasa(index), index);
+        });
+
+        configurarFramePrincipal(frame, painelTabuleiro, painelDireito);
+    }
+
+    public void exibirMenuPrincipal() {
+        //bgm.tocarSom("recursos/sons/menu.wav", true);
+            layout.show(telas, "Introducao1");
+            Timer timer1 = new Timer(3000, e -> {
+                layout.show(telas, "Introducao2");
+                Timer timer2 = new Timer(2000, e2 -> layout.show(telas, "MenuPrincipal"));
+                timer2.setRepeats(false);
+                timer2.start();
+            });
+            timer1.setRepeats(false);
+            timer1.start();
     }
 }

@@ -8,7 +8,7 @@ public class Jogador {
     private int casaAtual;
     private int saldo;
     private boolean jogando;
-    private Color cor; // Nova propriedade
+    private Color cor;
 
     public Jogador(String nome, Color cor) {
         this.nome = nome;
