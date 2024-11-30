@@ -8,20 +8,27 @@ import modelo.CartaSorteAzar;
 
 
 public class JogoController {
-    private int jogadorAtual;
+    public int iJogadorAtual;
     private TabuleiroController tabuleiroController;
     private Runnable atualizarInterfaceCallback;
     private SomController somController;
 
     public JogoController(TabuleiroController tabuleiroController) {
         this.tabuleiroController = tabuleiroController;
-        this.jogadorAtual = 0;
+        this.iJogadorAtual = 0;
         this.somController = new SomController();
-        somController.tocarSom("recursos/sons/menu.wav", true); // Tocar som do menu ao iniciar
     }
 
     public TabuleiroController getTabuleiroController() {
         return tabuleiroController;
+    }
+
+    public int getIJogadorAtual() {
+        return this.iJogadorAtual;
+    }
+
+    public void setIJogadorAtual(int iJogadorAtual) {
+        this.iJogadorAtual = iJogadorAtual;
     }
 
     public void setAtualizarInterfaceCallback(Runnable callback) {
@@ -29,22 +36,22 @@ public class JogoController {
     }
 
     public Jogador getJogadorAtual() {
-        return tabuleiroController.getJogadores().get(jogadorAtual);
+        return tabuleiroController.getJogadores().get(iJogadorAtual);
     }
 
     public void executarJogada(int casasParaMover) {
         Jogador jogadorAtual = getJogadorAtual();
         Casa[] casas = tabuleiroController.getCasas();
-    
+
         // Som ao rolar dados
         somController.tocarSom("recursos/sons/dados.wav", false);
 
         // Identifica a casa inicial
         Casa casaInicial = casas[jogadorAtual.getCasaAtual()];
-    
+
         // Movimenta o jogador
         jogadorAtual.setCasaAtual((jogadorAtual.getCasaAtual() + casasParaMover) % casas.length);
-    
+
         // Verifica se o jogador completou um loop no tabuleiro
         if (jogadorAtual.getCasaAtual() + casasParaMover >= casas.length) {
             somController.tocarSom("recursos/sons/avanca.wav", false);
@@ -52,7 +59,7 @@ public class JogoController {
 
         // Identifica a casa final
         Casa casaAtual = casas[jogadorAtual.getCasaAtual()];
-    
+
         if ("propriedade".equals(casaAtual.getTipo())) {
             if (!casaAtual.isComprada()) {
                 // Propriedade ainda não comprada
@@ -63,7 +70,7 @@ public class JogoController {
                         "Compra de Propriedade",
                         JOptionPane.YES_NO_OPTION
                 );
-    
+
                 if (escolha == JOptionPane.YES_OPTION) {
                     if (jogadorAtual.getSaldo() >= casaAtual.getValor()) {
                         jogadorAtual.setSaldo(jogadorAtual.getSaldo() - casaAtual.getValor());
@@ -109,10 +116,10 @@ public class JogoController {
             somController.tocarSom("recursos/sons/seleciona.wav", false); // Som ao selecionar casa especial
             JOptionPane.showMessageDialog(null, "Casa Especial: " + casaAtual.getNome());
         }
-    
+
         // Passa para o próximo jogador
-        this.jogadorAtual = (this.jogadorAtual + 1) % tabuleiroController.getJogadores().size();
-    
+        this.iJogadorAtual = (this.iJogadorAtual + 1) % tabuleiroController.getJogadores().size();
+
         // Atualiza a interface, se o callback estiver configurado
         if (atualizarInterfaceCallback != null) {
             atualizarInterfaceCallback.run();

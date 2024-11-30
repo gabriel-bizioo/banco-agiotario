@@ -5,8 +5,8 @@ import java.awt.Color;
 public class CorUtil {
 
     // Retorna a cor associada ao nome do jogador
-    public static Color getCorDoJogador(String nomeJogador) {
-        switch (nomeJogador.toLowerCase()) {
+    public static Color getCorDoJogador(String corJogador) {
+        switch (corJogador.toLowerCase()) {
             case "vermelho":
                 return Color.RED;
             case "verde":

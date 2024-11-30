@@ -26,6 +26,14 @@ public class TabuleiroController {
         inicializarCoordenadasCasas();
     }
 
+    public TabuleiroController(Tabuleiro tabuleiro, ArrayList<Jogador> jogadores) {
+        this.tabuleiro = tabuleiro;
+        this.jogadores = jogadores;
+        inicializarCasas();
+        inicializarCartas();
+        inicializarCoordenadasCasas();
+    }
+
     public Casa[] getCasas() {
         return tabuleiro.getCasas();
     }

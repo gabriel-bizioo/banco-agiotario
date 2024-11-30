@@ -24,6 +24,7 @@ public class PainelTabuleiro extends JPanel {
     private static final int PADDING_CASA = 2;              // Padding de 1 pixel ao redor das casas
 
 
+    private JFrame frame;
     private JogoController jogoController;
 
     private BufferedImage fundoTabuleiro;   // Fundo do tabuleiro
@@ -34,7 +35,8 @@ public class PainelTabuleiro extends JPanel {
     private JButton botaoRolarDados;        // Botão para rolar os dados
     private JButton botaoSalvarJogo;        // Botão para rolar os dados
 
-    public PainelTabuleiro(JogoController jogoController) {
+    public PainelTabuleiro(JFrame frame, JogoController jogoController) {
+        this.frame = frame;
         this.jogoController = jogoController;
 
         carregarImagensTabuleiro();
@@ -45,7 +47,13 @@ public class PainelTabuleiro extends JPanel {
     }
 
     private void salvarJogo() {
-        File arquivo = new File("saves/teste.sav");
+        String nomeArquivo = JOptionPane.showInputDialog(this.frame, "Digite o nome do arquivo:");
+        if(nomeArquivo.isEmpty() || nomeArquivo.equals("")){
+            JOptionPane.showMessageDialog(this.frame, "Erro ao salvar o jogo: nome vazio.");
+            return;
+        }
+
+        File arquivo = new File("saves/" + nomeArquivo);
 
         try {
             arquivo.createNewFile();
@@ -53,14 +61,13 @@ public class PainelTabuleiro extends JPanel {
             SaveUtil.salvarEstado(jogoController, arquivo);
         }
         catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao salvar o jogo");
+                JOptionPane.showMessageDialog(this.frame, "Erro ao salvar o jogo");
                 System.out.println("Erro ao salvar o jogo:");
                 e.printStackTrace();
-                //System.out.println(e.toString());
                 return;
         }
 
-        JOptionPane.showMessageDialog(null, "Jogo salvo com sucesso em " + arquivo.getPath());
+        JOptionPane.showMessageDialog(this.frame, "Jogo salvo com sucesso em " + arquivo.getPath());
     }
 
     private void carregarImagensTabuleiro() {

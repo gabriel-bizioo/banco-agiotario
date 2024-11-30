@@ -5,12 +5,16 @@ import java.util.ArrayList;
 
 public class Jogador {
     private String nome;
+    private String cor;
     private int casaAtual;
     private int saldo;
     private boolean jogando;
-    private Color cor;
 
-    public Jogador(String nome, Color cor) {
+    public Jogador() {
+
+    }
+
+    public Jogador(String nome, String cor) {
         this.nome = nome;
         this.casaAtual = 0; // Começa na primeira casa
         this.saldo = 1500; // Saldo inicial
@@ -46,7 +50,7 @@ public class Jogador {
         this.jogando = jogando;
     }
 
-    public Color getCor() {
+    public String getCor() {
         return cor;
     }
 

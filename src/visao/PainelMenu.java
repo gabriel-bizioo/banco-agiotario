@@ -211,9 +211,9 @@ public class PainelMenu extends JPanel {
 
     private void carregarJogo() {
         File arquivo;
-        JFileChooser escolherArquivo = new JFileChooser();
+        JFileChooser escolherArquivo = new JFileChooser("saves/");
 
-        escolherArquivo.showDialog(this.frame, "Selecione o jogo a carregar\n");
+        escolherArquivo.showDialog(this.frame, "Carregar");
         arquivo = escolherArquivo.getSelectedFile();
         if(arquivo == null)
             return;
@@ -233,7 +233,7 @@ public class PainelMenu extends JPanel {
     private void iniciarJogo() {
         TabuleiroController tabuleiroController = jogoController.getTabuleiroController();
         PainelDescricaoCasa painelDescricaoCasa = new PainelDescricaoCasa("recursos/imagens/painel/fundo_casas.png");
-        PainelTabuleiro painelTabuleiro = new PainelTabuleiro(jogoController);
+        PainelTabuleiro painelTabuleiro = new PainelTabuleiro(this.frame, jogoController);
         PainelJogador painelJogador = new PainelJogador(tabuleiroController.getJogadores(),
                 new ArrayList<>(Arrays.asList(jogoController.getTabuleiroController().getCasas())));
         JPanel painelDireito = criarPainelDireito(painelJogador, painelDescricaoCasa);

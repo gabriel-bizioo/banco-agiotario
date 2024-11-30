@@ -1,0 +1,28 @@
+{
+  "jogadores" : [ {
+    "nome" : "Jogador 1",
+    "cor" : "Verde",
+    "casaAtual" : 6,
+    "saldo" : 1550,
+    "jogando" : true
+  }, {
+    "nome" : "Jogador 2",
+    "cor" : "Vermelho",
+    "casaAtual" : 4,
+    "saldo" : 1400,
+    "jogando" : true
+  }, {
+    "nome" : "Jogador 3",
+    "cor" : "Amarelo",
+    "casaAtual" : 0,
+    "saldo" : 1500,
+    "jogando" : true
+  }, {
+    "nome" : "Jogador 4",
+    "cor" : "Azul",
+    "casaAtual" : 0,
+    "saldo" : 1500,
+    "jogando" : true
+  } ],
+  "ijogadorAtual" : 2
+}
