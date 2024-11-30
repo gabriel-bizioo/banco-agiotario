@@ -4,13 +4,15 @@ import modelo.Tabuleiro;
 import modelo.Jogador;
 import modelo.Casa;
 
+
 import controle.SomController;
 import controle.TabuleiroController;
 import controle.JogoController;
 
-import util.ArquivoUtil;
+import util.SaveUtil;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.io.IOException;
+import java.io.File;
 
 public class PainelMenu extends JPanel {
     private CardLayout layout;
@@ -193,7 +196,7 @@ public class PainelMenu extends JPanel {
 
     private void configurarJogadores(JFrame frame, int quantidade) {
         ArrayList<Jogador> jogadores = new ArrayList<>();
-        Color[] cores = { Color.GREEN, Color.RED, Color.YELLOW, Color.BLUE };
+        String[] cores = { "Verde", "Vermelho", "Amarelo", "Azul"};
         String[] nomesPadrao = { "Jogador 1", "Jogador 2", "Jogador 3", "Jogador 4" };
 
         for (int i = 0; i < quantidade; i++) {
@@ -207,29 +210,36 @@ public class PainelMenu extends JPanel {
     }
 
     private void carregarJogo() {
+        File arquivo;
+        JFileChooser escolherArquivo = new JFileChooser();
+
+        escolherArquivo.showDialog(this.frame, "Selecione o jogo a carregar\n");
+        arquivo = escolherArquivo.getSelectedFile();
+        if(arquivo == null)
+            return;
+
         try {
-            String nome = JOptionPane.showInputDialog(null, "");
-            nome = "saves/" + nome;
-            this.jogoController = ArquivoUtil.<JogoController>carregarEstado(nome, JogoController.class);
+            this.jogoController = SaveUtil.carregarEstado(arquivo);
         }
         catch (IOException e) {
-
+            System.out.println("Erro ao carregar o jogo:");
+            System.out.println(e.toString());
         }
-        iniciarJogo();
+
+        if(this.jogoController != null);
+            iniciarJogo();
     }
 
     private void iniciarJogo() {
-        bgm.pararSom();
-        bgm.tocarSom("recursos/sons/ambiente.wav", true);
         TabuleiroController tabuleiroController = jogoController.getTabuleiroController();
-
+        PainelDescricaoCasa painelDescricaoCasa = new PainelDescricaoCasa("recursos/imagens/painel/fundo_casas.png");
         PainelTabuleiro painelTabuleiro = new PainelTabuleiro(jogoController);
         PainelJogador painelJogador = new PainelJogador(tabuleiroController.getJogadores(),
                 new ArrayList<>(Arrays.asList(jogoController.getTabuleiroController().getCasas())));
-        PainelDescricaoCasa painelDescricaoCasa = new PainelDescricaoCasa("recursos/imagens/painel/fundo_casas.png");
-
         JPanel painelDireito = criarPainelDireito(painelJogador, painelDescricaoCasa);
 
+        bgm.pararSom();
+        bgm.tocarSom("recursos/sons/ambiente.wav", true);
         painelTabuleiro.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {

@@ -3,6 +3,8 @@ package visao;
 import modelo.Casa;
 import modelo.Jogador;
 
+import util.CorUtil;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -57,7 +59,7 @@ public class PainelJogador extends JPanel {
         // Painel do cabeçalho (Nome, Saldo, Status)
         JPanel painelCabecalho = new JPanel();
         painelCabecalho.setLayout(new BoxLayout(painelCabecalho, BoxLayout.Y_AXIS));
-        painelCabecalho.setBackground(jogador != null ? jogador.getCor() : corFaltante);
+        painelCabecalho.setBackground(jogador != null ? CorUtil.getCorDoJogador(jogador.getCor()) : corFaltante);
 
         Color corTexto = (painelCabecalho.getBackground() == Color.BLUE || painelCabecalho.getBackground() == Color.BLACK)
                 ? Color.WHITE

@@ -12,17 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import controle.JogoController;
-
 import modelo.Jogador;
 
-import util.ArquivoUtil;
+import util.*;
 
 public class PainelTabuleiro extends JPanel {
-    private static final int TAMANHO_CASA = 80; // Tamanho de cada casa em pixels
-    private static final double LOGO_SCALE = 0.4; // Escala da logo
-    private static final int TAMANHO_DADO = 64; // Altura e largura do asset do dado
-    private static final int ESPACAMENTO_COMPONENTES = 20; // Espaçamento entre componentes
-    private static final int PADDING_CASA = 2; // Padding de 1 pixel ao redor das casas
+    private static final int TAMANHO_CASA = 80;             // Tamanho de cada casa em pixels
+    private static final double LOGO_SCALE = 0.4;           // Escala da logo
+    private static final int TAMANHO_DADO = 64;             // Altura e largura do asset do dado
+    private static final int ESPACAMENTO_COMPONENTES = 20;  // Espaçamento entre componentes
+    private static final int PADDING_CASA = 2;              // Padding de 1 pixel ao redor das casas
 
 
     private JogoController jogoController;
@@ -45,17 +44,23 @@ public class PainelTabuleiro extends JPanel {
         setLayout(null); // Layout absoluto para controle manual
     }
 
-    private void salvarJogo(String caminhoArquivo) {
-        try{
-            ArquivoUtil.salvarEstado(jogoController, caminhoArquivo);
+    private void salvarJogo() {
+        File arquivo = new File("saves/teste.sav");
+
+        try {
+            arquivo.createNewFile();
+            System.out.println("Criou arquivo: " + arquivo.getPath());
+            SaveUtil.salvarEstado(jogoController, arquivo);
         }
         catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "ERRO AO SALVAR O JOGO");
+                JOptionPane.showMessageDialog(null, "Erro ao salvar o jogo");
+                System.out.println("Erro ao salvar o jogo:");
+                e.printStackTrace();
+                //System.out.println(e.toString());
                 return;
         }
 
-
-        JOptionPane.showMessageDialog(null, "Jogo salvo com sucesso em " + caminhoArquivo);
+        JOptionPane.showMessageDialog(null, "Jogo salvo com sucesso em " + arquivo.getPath());
     }
 
     private void carregarImagensTabuleiro() {
@@ -96,12 +101,8 @@ public class PainelTabuleiro extends JPanel {
         add(botaoRolarDados);
 
         botaoSalvarJogo = new JButton("Salvar jogo");
-        botaoSalvarJogo.setPreferredSize(new Dimension(100, TAMANHO_DADO-50));
-        botaoRolarDados.addActionListener(e -> {
-            String arquivo = JOptionPane.showInputDialog(null, "Digite o nome do arquivo");
-            arquivo = "saves/" + arquivo;
-            salvarJogo(arquivo);
-        });
+        botaoSalvarJogo.setPreferredSize(new Dimension(150, TAMANHO_DADO));
+        botaoSalvarJogo.addActionListener(e -> salvarJogo());
         add(botaoSalvarJogo);
     }
 
@@ -209,22 +210,22 @@ public class PainelTabuleiro extends JPanel {
 
                 switch (jogadoresSelecionados.size()) {
                     case 2: // Dois jogadores, bolinhas lado a lado
-                        g.setColor(jogador.getCor());
+                        g.setColor(CorUtil.getCorDoJogador((jogador.getCor())));
                         g.fillOval(xBase + (i * 2 - 1) * offset, yBase, raio, raio);
                         break;
 
                     case 3: // Três jogadores, dois em cima, um embaixo
                         if (i < 2) {
-                            g.setColor(jogador.getCor());
+                            g.setColor(CorUtil.getCorDoJogador((jogador.getCor())));
                             g.fillOval(xBase + (i * 2 - 1) * offset, yBase - offset, raio, raio);
                         } else {
-                            g.setColor(jogador.getCor());
+                            g.setColor(CorUtil.getCorDoJogador((jogador.getCor())));
                             g.fillOval(xBase, yBase + offset, raio, raio);
                         }
                         break;
 
                     case 4: // Quatro jogadores, dois em cima, dois embaixo
-                        g.setColor(jogador.getCor());
+                        g.setColor(CorUtil.getCorDoJogador((jogador.getCor())));
                         if (i < 2) {
                             g.fillOval(xBase + (i * 2 - 1) * offset, yBase - offset, raio, raio);
                         } else {
@@ -239,13 +240,13 @@ public class PainelTabuleiro extends JPanel {
     private void posicionarComponentesInterativos(Graphics g) {
         int larguraComponente = botaoRolarDados.getPreferredSize().width + (TAMANHO_DADO * 2)
                 + (ESPACAMENTO_COMPONENTES * 2);
-        int xCentro = (getWidth() - larguraComponente) / 2;
-        int yCentro = getHeight() - 100;
+        int xCentro = (this.getWidth() - larguraComponente) / 2;
+        int yCentro = this.getHeight() - 100;
 
         botaoRolarDados.setBounds(xCentro, yCentro, botaoRolarDados.getPreferredSize().width,
                 botaoRolarDados.getPreferredSize().height);
 
-        botaoSalvarJogo.setBounds(xCentro, yCentro+50, botaoSalvarJogo.getPreferredSize().width,
+        botaoSalvarJogo.setBounds(xCentro-160, yCentro, botaoSalvarJogo.getPreferredSize().width,
                 botaoSalvarJogo.getPreferredSize().height);
 
         int xDado1 = xCentro + botaoRolarDados.getPreferredSize().width + ESPACAMENTO_COMPONENTES;
