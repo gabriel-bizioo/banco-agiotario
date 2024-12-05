@@ -1,0 +1,367 @@
+{
+  "jogadores" : [ {
+    "nome" : "Jogador 1",
+    "cor" : "Verde",
+    "casaAtual" : 24,
+    "saldo" : 900,
+    "jogando" : true
+  }, {
+    "nome" : "Jogador 2",
+    "cor" : "Vermelho",
+    "casaAtual" : 17,
+    "saldo" : 800,
+    "jogando" : true
+  }, {
+    "nome" : "Jogador 3",
+    "cor" : "Amarelo",
+    "casaAtual" : 18,
+    "saldo" : 1050,
+    "jogando" : true
+  } ],
+  "casas" : [ {
+    "nome" : "Início",
+    "tipo" : "especial",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Jardim Botânico",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 150,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Niemeyer",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 100,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Companhia Petrolífera",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 300,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Beira Mar",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 100,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Juscelino Kubitschek",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 200,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Rua Oscar Freire",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 150,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Restituição do imposto de renda",
+    "tipo" : "especial",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 300,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Ibirapuera",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 120,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Prisão (Apenas Visita)",
+    "tipo" : "especial",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Praça da Sé",
+    "tipo" : "propriedade",
+    "corDono" : "Amarelo",
+    "nivel" : 1,
+    "valor" : 150,
+    "comprada" : true,
+    "dono" : {
+      "nome" : "Jogador 3",
+      "cor" : "Amarelo",
+      "casaAtual" : 18,
+      "saldo" : 1050,
+      "jogando" : true
+    }
+  }, {
+    "nome" : "Rua da Consolação",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 140,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Central de Força e Luz",
+    "tipo" : "propriedade",
+    "corDono" : "Vermelho",
+    "nivel" : 1,
+    "valor" : 400,
+    "comprada" : true,
+    "dono" : {
+      "nome" : "Jogador 2",
+      "cor" : "Vermelho",
+      "casaAtual" : 17,
+      "saldo" : 800,
+      "jogando" : true
+    }
+  }, {
+    "nome" : "Viaduto do Chá",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 200,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Receita Federal",
+    "tipo" : "especial",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 180,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Higienópolis",
+    "tipo" : "propriedade",
+    "corDono" : "Vermelho",
+    "nivel" : 1,
+    "valor" : 300,
+    "comprada" : true,
+    "dono" : {
+      "nome" : "Jogador 2",
+      "cor" : "Vermelho",
+      "casaAtual" : 17,
+      "saldo" : 800,
+      "jogando" : true
+    }
+  }, {
+    "nome" : "Jardins",
+    "tipo" : "propriedade",
+    "corDono" : "Amarelo",
+    "nivel" : 1,
+    "valor" : 300,
+    "comprada" : true,
+    "dono" : {
+      "nome" : "Jogador 3",
+      "cor" : "Amarelo",
+      "casaAtual" : 18,
+      "saldo" : 1050,
+      "jogando" : true
+    }
+  }, {
+    "nome" : "Avenida São João",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 200,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Feriado",
+    "tipo" : "especial",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Ipiranga",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 220,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Companhia de água e saneamento",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 500,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Companhia de Mineração",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 600,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Recife",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 350,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida Paulista",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 350,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Ponte do Guaíba",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 250,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Pontocom",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 400,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Vá para a Prisão",
+    "tipo" : "prisao",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Praça dos Três Poderes",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 500,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Praça Castro Alves",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 500,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Avenida do Contorno",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 500,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Ponte Rio-Niterói",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 600,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Créditos de Carbono",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 900,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Barra da Tijuca",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 500,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Sorte ou Revés",
+    "tipo" : "sorteAzar",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 0,
+    "comprada" : false,
+    "dono" : null
+  }, {
+    "nome" : "Marina da Glória",
+    "tipo" : "propriedade",
+    "corDono" : null,
+    "nivel" : 1,
+    "valor" : 800,
+    "comprada" : false,
+    "dono" : null
+  } ],
+  "ijogadorAtual" : 2
+}

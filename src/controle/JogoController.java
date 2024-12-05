@@ -6,6 +6,8 @@ import modelo.Casa;
 import modelo.Jogador;
 import modelo.CartaSorteAzar;
 
+import java.util.ArrayList;
+
 
 public class JogoController {
     public int iJogadorAtual;
@@ -41,24 +43,21 @@ public class JogoController {
 
     public void executarJogada(int casasParaMover) {
         Jogador jogadorAtual = getJogadorAtual();
-        Casa[] casas = tabuleiroController.getCasas();
+        ArrayList<Casa> casas = tabuleiroController.getCasas();
 
         // Som ao rolar dados
         somController.tocarSom("recursos/sons/dados.wav", false);
 
-        // Identifica a casa inicial
-        Casa casaInicial = casas[jogadorAtual.getCasaAtual()];
-
         // Movimenta o jogador
-        jogadorAtual.setCasaAtual((jogadorAtual.getCasaAtual() + casasParaMover) % casas.length);
+        jogadorAtual.setCasaAtual((jogadorAtual.getCasaAtual() + casasParaMover) % casas.size());
 
         // Verifica se o jogador completou um loop no tabuleiro
-        if (jogadorAtual.getCasaAtual() + casasParaMover >= casas.length) {
+        if (jogadorAtual.getCasaAtual() + casasParaMover >= casas.size()) {
             somController.tocarSom("recursos/sons/avanca.wav", false);
         }
 
         // Identifica a casa final
-        Casa casaAtual = casas[jogadorAtual.getCasaAtual()];
+        Casa casaAtual = casas.get(jogadorAtual.getCasaAtual());
 
         if ("propriedade".equals(casaAtual.getTipo())) {
             if (!casaAtual.isComprada()) {

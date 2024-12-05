@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import modelo.Tabuleiro;
 import modelo.Jogador;
+import modelo.Casa;
 
 import controle.JogoController;
 import controle.TabuleiroController;
@@ -18,6 +19,7 @@ public class SaveUtil {
 
     private int iJogadorAtual;
     private ArrayList<Jogador> jogadores;
+    private ArrayList<Casa> casas;
 
     public void setIJogadorAtual(int iJogadorAtual) {
         this.iJogadorAtual = iJogadorAtual;
@@ -35,26 +37,49 @@ public class SaveUtil {
         return this.jogadores;
     }
 
+    public ArrayList<Casa> getCasas() {
+        return this.casas;
+    }
+
+    public void setCasas(ArrayList<Casa> casas) {
+        this.casas = casas;
+    }
+
     public static void salvarEstado(JogoController jogo, File arquivo) throws IOException {
         SaveUtil saveObj = new SaveUtil();
 
         saveObj.setIJogadorAtual(jogo.getIJogadorAtual());
         saveObj.setJogadores(jogo.getTabuleiroController().getJogadores());
+        saveObj.setCasas(jogo.getTabuleiroController().getCasas());
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(arquivo, saveObj);
 
         System.out.println("jogo salvo com sucesso em " + arquivo.getPath());
     }
 
     public static JogoController carregarEstado(File arquivo) throws IOException {
-        SaveUtil saveObj = new SaveUtil();
-        Tabuleiro tabuleiro = new Tabuleiro();
-        TabuleiroController tabuleiroController; 
+        Tabuleiro tabuleiro;
+        TabuleiroController tabuleiroController;
+        JogoController jogo;
+        SaveUtil loadObj = new SaveUtil();
 
-        saveObj = objectMapper.readValue(arquivo, SaveUtil.class);
-        tabuleiroController = new TabuleiroController(tabuleiro, saveObj.getJogadores());
+        loadObj = objectMapper.readValue(arquivo, SaveUtil.class);
 
-        JogoController jogo = new JogoController(tabuleiroController);
-        jogo.setIJogadorAtual(saveObj.getIJogadorAtual());
+        for(Casa propriedade : loadObj.getCasas()) {
+            if(propriedade.getCorDono() != null) {
+                for(Jogador jogador : loadObj.getJogadores()) {
+                    if(propriedade.getCorDono().equals(jogador.getCor())) {
+                        System.out.println(jogador.getCor());
+                        System.out.println(propriedade.getNome());
+                        propriedade.setDono(jogador);
+                    }
+                }
+            }
+       }
+
+        tabuleiro = new Tabuleiro(loadObj.getCasas());
+        tabuleiroController = new TabuleiroController(tabuleiro, loadObj.getJogadores());
+        jogo = new JogoController(tabuleiroController);
+        jogo.setIJogadorAtual(loadObj.getIJogadorAtual());
         return jogo;
     }
 }

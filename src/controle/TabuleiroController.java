@@ -29,16 +29,15 @@ public class TabuleiroController {
     public TabuleiroController(Tabuleiro tabuleiro, ArrayList<Jogador> jogadores) {
         this.tabuleiro = tabuleiro;
         this.jogadores = jogadores;
-        inicializarCasas();
         inicializarCartas();
         inicializarCoordenadasCasas();
     }
 
-    public Casa[] getCasas() {
+    public ArrayList<Casa> getCasas() {
         return tabuleiro.getCasas();
     }
 
-    public void setCasas(Casa[] casas) {
+    public void setCasas(ArrayList<Casa> casas) {
         tabuleiro.setCasas(casas);
     }
 
@@ -51,8 +50,8 @@ public class TabuleiroController {
     }
 
     public Casa getCasa(int index) {
-        if (index >= 0 && index < tabuleiro.getCasas().length) {
-            return tabuleiro.getCasas()[index];
+        if (index >= 0 && index < tabuleiro.getCasas().size()) {
+            return tabuleiro.getCasas().get(index);
         }
         return null;
     }
@@ -115,48 +114,48 @@ public class TabuleiroController {
 
     private void inicializarCasas() {
         // Criar o array de casas
-        Casa[] casas = new Casa[40];
+        ArrayList<Casa> casas = new ArrayList<Casa>(40);
 
-        casas[0] = new Casa("Início", "especial", 0, 0);
-        casas[1] = new Casa("Jardim Botânico", "propriedade", 150, 1);
-        casas[2] = new Casa("Avenida Niemeyer", "propriedade", 100, 2);
-        casas[3] = new Casa("Companhia Petrolífera", "propriedade", 300, 3);
-        casas[4] = new Casa("Avenida Beira Mar", "propriedade", 100, 4);
-        casas[5] = new Casa("Avenida Juscelino Kubitschek", "propriedade", 200, 5);
-        casas[6] = new Casa("Sorte ou Revés", "sorteAzar", 0, 6);
-        casas[7] = new Casa("Rua Oscar Freire", "propriedade", 150, 7);
-        casas[8] = new Casa("Restituição do imposto de renda", "especial", 300, 8); // Jogador deve receber 300 reais
-        casas[9] = new Casa("Avenida Ibirapuera", "propriedade", 120, 9);
-        casas[10] = new Casa("Prisão (Apenas Visita)", "especial", 0, 10);
-        casas[11] = new Casa("Sorte ou Revés", "sorteAzar", 0, 11);
-        casas[12] = new Casa("Praça da Sé", "propriedade", 150, 12);
-        casas[13] = new Casa("Rua da Consolação", "propriedade", 140, 13);
-        casas[14] = new Casa("Central de Força e Luz", "propriedade", 400, 14);
-        casas[15] = new Casa("Viaduto do Chá", "propriedade", 200, 15);
-        casas[16] = new Casa("Receita Federal", "especial", 180, 16); // Jogador perde 180 reais
-        casas[17] = new Casa("Higienópolis", "propriedade", 300, 17);
-        casas[18] = new Casa("Jardins", "propriedade", 300, 18);
-        casas[19] = new Casa("Avenida São João", "propriedade", 200, 19);
-        casas[20] = new Casa("Feriado", "especial", 0, 20);
-        casas[21] = new Casa("Avenida Ipiranga", "propriedade", 220, 21);
-        casas[22] = new Casa("Companhia de água e saneamento", "propriedade", 500, 22);
-        casas[23] = new Casa("Companhia de Mineração", "propriedade", 600, 23);
-        casas[24] = new Casa("Sorte ou Revés", "sorteAzar", 0, 24);
-        casas[25] = new Casa("Avenida Recife", "propriedade", 350, 25);
-        casas[26] = new Casa("Avenida Paulista", "propriedade", 350, 26);
-        casas[27] = new Casa("Sorte ou Revés", "sorteAzar", 0, 27);
-        casas[28] = new Casa("Ponte do Guaíba", "propriedade", 250, 28);
-        casas[29] = new Casa("Pontocom", "propriedade", 400, 29);
-        casas[30] = new Casa("Vá para a Prisão", "prisao", 0, 30);
-        casas[31] = new Casa("Praça dos Três Poderes", "propriedade", 500, 31);
-        casas[32] = new Casa("Sorte ou Revés", "sorteAzar", 0, 32);
-        casas[33] = new Casa("Praça Castro Alves", "propriedade", 500, 33);
-        casas[34] = new Casa("Avenida do Contorno", "propriedade", 500, 34);
-        casas[35] = new Casa("Ponte Rio-Niterói", "propriedade", 600, 35);
-        casas[36] = new Casa("Créditos de Carbono", "propriedade", 900, 36);
-        casas[37] = new Casa("Barra da Tijuca", "propriedade", 500, 37);
-        casas[38] = new Casa("Sorte ou Revés", "sorteAzar", 0, 38);
-        casas[39] = new Casa("Marina da Glória", "propriedade", 800, 39);
+        casas.add(new Casa("Início", "especial", 0, 0));
+        casas.add(new Casa("Jardim Botânico", "propriedade", 150, 1));
+        casas.add(new Casa("Avenida Niemeyer", "propriedade", 100, 2));
+        casas.add(new Casa("Companhia Petrolífera", "propriedade", 300, 3));
+        casas.add(new Casa("Avenida Beira Mar", "propriedade", 100, 4));
+        casas.add(new Casa("Avenida Juscelino Kubitschek", "propriedade", 200, 5));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 6));
+        casas.add(new Casa("Rua Oscar Freire", "propriedade", 150, 7));
+        casas.add(new Casa("Restituição do imposto de renda", "especial", 300, 8)); // Jogador deve receber 300 reai)s
+        casas.add(new Casa("Avenida Ibirapuera", "propriedade", 120, 9));
+        casas.add(new Casa("Prisão (Apenas Visita)", "especial", 0, 10));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 11));
+        casas.add(new Casa("Praça da Sé", "propriedade", 150, 12));
+        casas.add(new Casa("Rua da Consolação", "propriedade", 140, 13));
+        casas.add(new Casa("Central de Força e Luz", "propriedade", 400, 14));
+        casas.add(new Casa("Viaduto do Chá", "propriedade", 200, 15));
+        casas.add(new Casa("Receita Federal", "especial", 180, 16)); // Jogador perde 180 reai)s
+        casas.add(new Casa("Higienópolis", "propriedade", 300, 17));
+        casas.add(new Casa("Jardins", "propriedade", 300, 18));
+        casas.add(new Casa("Avenida São João", "propriedade", 200, 19));
+        casas.add(new Casa("Feriado", "especial", 0, 20));
+        casas.add(new Casa("Avenida Ipiranga", "propriedade", 220, 21));
+        casas.add(new Casa("Companhia de água e saneamento", "propriedade", 500, 22));
+        casas.add(new Casa("Companhia de Mineração", "propriedade", 600, 23));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 24));
+        casas.add(new Casa("Avenida Recife", "propriedade", 350, 25));
+        casas.add(new Casa("Avenida Paulista", "propriedade", 350, 26));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 27));
+        casas.add(new Casa("Ponte do Guaíba", "propriedade", 250, 28));
+        casas.add(new Casa("Pontocom", "propriedade", 400, 29));
+        casas.add(new Casa("Vá para a Prisão", "prisao", 0, 30));
+        casas.add(new Casa("Praça dos Três Poderes", "propriedade", 500, 31));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 32));
+        casas.add(new Casa("Praça Castro Alves", "propriedade", 500, 33));
+        casas.add(new Casa("Avenida do Contorno", "propriedade", 500, 34));
+        casas.add(new Casa("Ponte Rio-Niterói", "propriedade", 600, 35));
+        casas.add(new Casa("Créditos de Carbono", "propriedade", 900, 36));
+        casas.add(new Casa("Barra da Tijuca", "propriedade", 500, 37));
+        casas.add(new Casa("Sorte ou Revés", "sorteAzar", 0, 38));
+        casas.add(new Casa("Marina da Glória", "propriedade", 800, 39));
 
         // Define o array de casas no tabuleiro
         tabuleiro.setCasas(casas);

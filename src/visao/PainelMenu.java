@@ -235,7 +235,7 @@ public class PainelMenu extends JPanel {
         PainelDescricaoCasa painelDescricaoCasa = new PainelDescricaoCasa("recursos/imagens/painel/fundo_casas.png");
         PainelTabuleiro painelTabuleiro = new PainelTabuleiro(this.frame, jogoController);
         PainelJogador painelJogador = new PainelJogador(tabuleiroController.getJogadores(),
-                new ArrayList<>(Arrays.asList(jogoController.getTabuleiroController().getCasas())));
+                jogoController.getTabuleiroController().getCasas());
         JPanel painelDireito = criarPainelDireito(painelJogador, painelDescricaoCasa);
 
         bgm.pararSom();

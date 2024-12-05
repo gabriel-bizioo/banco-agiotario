@@ -1,13 +1,21 @@
 package modelo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Casa {
     private String nome;
     private String tipo;
-    private int valor;
-    private boolean comprada;
-    private Jogador dono;
+    private String corDono;
     private int id;
     private int nivel;
+    private int valor;
+    private boolean comprada;
+
+    @JsonIgnore
+    private Jogador dono;
+
+    public Casa() {
+
+    }
 
     public Casa(String nome, String tipo, int valor, int id) {
         this.nome = nome;
@@ -41,7 +49,12 @@ public class Casa {
 
     public void setDono(Jogador dono) {
         this.dono = dono;
-        this.comprada = dono != null;
+        this.corDono = dono.getCor();
+        this.comprada = true;
+    }
+
+    public String getCorDono() {
+        return this.corDono;
     }
 
     public int getNivel() {
