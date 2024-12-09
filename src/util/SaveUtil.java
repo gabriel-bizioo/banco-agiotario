@@ -68,8 +68,6 @@ public class SaveUtil {
             if(propriedade.getCorDono() != null) {
                 for(Jogador jogador : loadObj.getJogadores()) {
                     if(propriedade.getCorDono().equals(jogador.getCor())) {
-                        System.out.println(jogador.getCor());
-                        System.out.println(propriedade.getNome());
                         propriedade.setDono(jogador);
                     }
                 }
